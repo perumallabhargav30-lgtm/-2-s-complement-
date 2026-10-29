@@ -1,0 +1,39 @@
+def rol(binary, positions):
+    print("\nRotate Left Without Carry (ROL)")
+    print("Original number:", binary)
+
+    for i in range(positions):
+        binary = binary[1:] + binary[0]
+        print("After rotation", i + 1, ":", binary)
+
+    return binary
+
+
+def rcl(binary, carry, positions):
+    print("\nRotate Left With Carry (RCL)")
+    print("Original number:", binary)
+    print("Initial carry:", carry)
+
+    for i in range(positions):
+        new_carry = int(binary[0])
+        binary = binary[1:] + str(carry)
+        carry = new_carry
+
+        print("After rotation", i + 1, ":", binary)
+        print("Carry flag:", carry)
+
+    return binary, carry
+
+
+
+number = "10110110"
+positions = 2
+
+result_rol = rol(number, positions)
+print("Final ROL result:", result_rol)
+print("Decimal result:", int(result_rol, 2))
+
+result_rcl, final_carry = rcl(number, 0, positions)
+print("Final RCL result:", result_rcl)
+print("Decimal result:", int(result_rcl, 2))
+print("Final carry flag:", final_carry)
