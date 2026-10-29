@@ -1,0 +1,44 @@
+def to_binary(n):
+    return format(n & 0xFF, '08b')
+
+
+def signed_value(binary):
+    value = int(binary, 2)
+    if value >= 128:
+        value -= 256
+    return value
+
+
+def add_8bit(a, b):
+    result = (a + b) & 0xFF
+    overflow = (
+        (a >= 0 and b >= 0 and signed_value(format(result, '08b')) < 0)
+        or
+        (a < 0 and b < 0 and signed_value(format(result, '08b')) >= 0)
+    )
+    return result, overflow
+
+
+# Expression (a): 34 + (+27)
+a, b = 34, 27
+result, overflow = add_8bit(a, b)
+
+print("Expression (a): 34 + (+27)")
+print("34  =", to_binary(a))
+print("+27 =", to_binary(b))
+print("Result in binary =", format(result, '08b'))
+print("Result in decimal =", signed_value(format(result, '08b')))
+print("Overflow =", overflow)
+
+print()
+
+# Expression (b): (-34) - (-27) = (-34) + (+27)
+a, b = -34, 27
+result, overflow = add_8bit(a, b)
+
+print("Expression (b): (-34) - (-27)")
+print("-34 =", to_binary(a))
+print("+27 =", to_binary(b))
+print("Result in binary =", format(result, '08b'))
+print("Result in decimal =", signed_value(format(result, '08b')))
+print("Overflow =", overflow)
